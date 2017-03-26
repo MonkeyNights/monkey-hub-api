@@ -20,9 +20,10 @@ namespace MonkeyHubApi.Controllers
 
         // GET api/tags
         [HttpGet]
-        public async Task<List<Tag>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await tagRepository.GetTagAsync();
+            var tags = await tagRepository.GetTagAsync();
+            return Ok(tags);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace MonkeyHubApi.Repositories
     public interface IContentRepository
     {
         Task<List<Content>> GetContentAsync();
+        Task<Content> GetContentByIdAsync(string id);
+        Task<Content> GetContentByTagIdAsync(string tagId);
     }
 
     public class ContentRepository : IContentRepository
@@ -79,6 +81,16 @@ namespace MonkeyHubApi.Repositories
         public async Task<List<Content>> GetContentAsync()
         {
             return await Task.FromResult(contents);
+        }
+
+        public async Task<Content> GetContentByIdAsync(string id)
+        {
+            return await Task.FromResult(contents.FirstOrDefault(c => c.Id.Equals(id)));
+        }
+
+        public async Task<Content> GetContentByTagIdAsync(string tagId)
+        {
+            return await Task.FromResult(contents.FirstOrDefault(c => c.Tag.Id.Equals(tagId)));
         }
     }
 }
