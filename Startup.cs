@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MonkeyHubApi.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 
@@ -27,6 +28,11 @@ namespace MonkeyHubApi
         {
             // Add framework services.
             services.AddMvc();
+
+
+            //IOC
+            services.AddScoped<IContentRepository, ContentRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
 
             //Adding swagger generation with default settings
             services.AddSwaggerGen(options =>

@@ -14,18 +14,18 @@ namespace MonkeyHubApi.Controllers
     [Produces("application/json")]
     public class ContentController : Controller
     {
-        IContentRepository contentRepository;
+        readonly IContentRepository _contentRepository;
 
-        public ContentController()
+        public ContentController(IContentRepository contentRepository)
         {
-            contentRepository = new ContentRepository();
+            _contentRepository = contentRepository;
         }
 
         // GET api/content
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var contents = await contentRepository.GetContentAsync();
+            var contents = await _contentRepository.GetContentAsync();
             return Ok(contents);
         }
 
@@ -35,7 +35,7 @@ namespace MonkeyHubApi.Controllers
         public async Task<IActionResult> GetById([FromQuery] string id)
         {
             if (string.IsNullOrWhiteSpace(id)) return BadRequest();
-            var content = await contentRepository.GetContentByIdAsync(id);
+            var content = await _contentRepository.GetContentByIdAsync(id);
             if (content == null) return NotFound();
 
             return Ok(content);
@@ -47,7 +47,7 @@ namespace MonkeyHubApi.Controllers
         public async Task<IActionResult> GetByTagId([FromQuery] string tag)
         {
             if (string.IsNullOrWhiteSpace(tag)) return BadRequest();
-            var content = await contentRepository.GetContentByTagIdAsync(tag);
+            var content = await _contentRepository.GetContentByTagIdAsync(tag);
             if (content == null) return NotFound();
 
             return Ok(content);
