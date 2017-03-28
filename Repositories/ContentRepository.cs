@@ -10,7 +10,7 @@ namespace MonkeyHubApi.Repositories
     {
         Task<List<Content>> GetContentAsync();
         Task<Content> GetContentByIdAsync(string id);
-        Task<Content> GetContentByTagIdAsync(string tagId);
+        Task<List<Content>> GetContentByTagIdAsync(string tagId);
     }
 
     public class ContentRepository : IContentRepository
@@ -26,7 +26,7 @@ namespace MonkeyHubApi.Repositories
                 Banner = "http://xamarinsummit.com.br/img/new_front.jpg",
                 Url = "http://xamarinsummit.com.br/",
                 Tag = new Tag {
-                        Id="a80d4e42-1192-11e7-93ae-92361f002671",
+                        Id="480d4e42-1192-11e7-93ae-92361f002671",
                         Name="Eventos",
                         Description="Eventos da comunidade Xamarin no Brasil",
                         Slug="eventos"
@@ -40,7 +40,7 @@ namespace MonkeyHubApi.Repositories
                 Banner = "http://res.cloudinary.com/https-xamarinbr-azurewebsites-net/image/upload/v1435031581/code-sharing-2_khe8vn.png",
                 Url = "http://xamarinbr.azurewebsites.net/xamarin-android-resolvendo-o-problema-deployment-failed-because-of-an-internal-error-failure-install_failed_update_incompatible/",
                 Tag = new Tag {
-                        Id="a80d52a2-1192-11e7-93ae-92361f002671",
+                        Id="380d52a2-1192-11e7-93ae-92361f002671",
                         Name="Xamarin Android",
                         Description="Aqui você vai encontrar ajuda relacionada a Xamarin.Android,",
                         Slug="xamarin-android"
@@ -54,7 +54,7 @@ namespace MonkeyHubApi.Repositories
                 Banner = "http://res.cloudinary.com/https-xamarinbr-azurewebsites-net/image/upload/v1435031581/code-sharing-2_khe8vn.png",
                 Url = "http://xamarinbr.azurewebsites.net/criando-um-app-ios-usando-o-visual-studio-e-xamarin/",
                 Tag = new Tag {
-                        Id="a80d52a2-1192-11e7-93ae-92361f002671",
+                        Id="280d52a2-1192-11e7-93ae-92361f002671",
                         Name="Xamarin iOS",
                         Description="Aqui você vai encontrar ajuda relacionada a Xamarin.iOS",
                         Slug="xamarin-ios"
@@ -68,7 +68,7 @@ namespace MonkeyHubApi.Repositories
                 Banner = "http://frases-para-status.com/wp-content/uploads/2016/07/status-para-facebook-810x400.png",
                 Url = "https://www.youtube.com/watch?v=cyq_ho4QflQ&index=9&list=PLNTCwkT5owTT0elAbegf6Akf1Mf0_HAbL",
                 Tag = new Tag {
-                        Id="a80d52a2-1192-11e7-93ae-92361f002671",
+                        Id="180d52a2-1192-11e7-93ae-92361f002671",
                         Name="Xamarin.Forms",
                         Description="Aqui você vai encontrar ajuda relacionada a Xamarin.Forms",
                         Slug="xamarin-forms"
@@ -88,9 +88,9 @@ namespace MonkeyHubApi.Repositories
             return await Task.FromResult(contents.FirstOrDefault(c => c.Id.Equals(id)));
         }
 
-        public async Task<Content> GetContentByTagIdAsync(string tagId)
+        public async Task<List<Content>> GetContentByTagIdAsync(string tagId)
         {
-            return await Task.FromResult(contents.FirstOrDefault(c => c.Tag.Id.Equals(tagId)));
+            return await Task.FromResult(contents.Where(c => c.Tag.Id.Equals(tagId)).ToList());
         }
     }
 }
