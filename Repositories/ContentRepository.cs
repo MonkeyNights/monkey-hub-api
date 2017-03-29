@@ -11,6 +11,7 @@ namespace MonkeyHubApi.Repositories
         Task<List<Content>> GetContentAsync();
         Task<Content> GetContentByIdAsync(string id);
         Task<List<Content>> GetContentByTagIdAsync(string tagId);
+        Task<List<Content>> SearchContentAsync(string filter);
     }
 
     public class ContentRepository : IContentRepository
@@ -91,6 +92,13 @@ namespace MonkeyHubApi.Repositories
         public async Task<List<Content>> GetContentByTagIdAsync(string tagId)
         {
             return await Task.FromResult(contents.Where(c => c.Tag.Id.Equals(tagId)).ToList());
+        }
+
+        public async Task<List<Content>> SearchContentAsync(string filter)
+        {
+            return await Task.FromResult(contents
+                .Where(c => c.Description.ToLower().Contains(filter) || c.Name.ToLower().Contains(filter))
+                .ToList());
         }
     }
 }

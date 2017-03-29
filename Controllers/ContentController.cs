@@ -52,5 +52,17 @@ namespace MonkeyHubApi.Controllers
 
             return Ok(contents);
         }
+
+        // GET api/content/search
+        [HttpGet]
+        [Route("search")]
+        public async Task<IActionResult> Search([FromQuery] string filter)
+        {
+            if (string.IsNullOrWhiteSpace(filter)) return BadRequest();
+            var contents = await _contentRepository.SearchContentAsync(filter.ToLower());
+            if (contents == null) return NotFound();
+
+            return Ok(contents);
+        }
     }
 }
