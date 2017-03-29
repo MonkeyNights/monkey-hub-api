@@ -47,10 +47,10 @@ namespace MonkeyHubApi.Controllers
         public async Task<IActionResult> GetByTagId([FromQuery] string tag)
         {
             if (string.IsNullOrWhiteSpace(tag)) return BadRequest();
-            var content = await _contentRepository.GetContentByTagIdAsync(tag);
-            if (content == null) return NotFound();
+            var contents = await _contentRepository.GetContentByTagIdAsync(tag);
+            if (contents == null) return NotFound();
 
-            return Ok(content);
+            return Ok(contents);
         }
     }
 }
